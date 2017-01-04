@@ -1,4 +1,5 @@
 import csv
+import argparse
 
 def strip_long_spaces(input):
     loc = input.find("  ")
@@ -9,7 +10,12 @@ def strip_long_spaces(input):
 csv.register_dialect('sparkasse', delimiter=';', quoting=csv.QUOTE_ALL)
 csv.register_dialect('ynab', delimiter=",", quoting=csv.QUOTE_MINIMAL)
 
-with open('trans.csv') as csvfile:
+
+parser = argparse.ArgumentParser(description='Convert Sparkasse CSV-CAMT files to YNAB compatible format.')
+parser.add_argument('input', help='input file')
+args = parser.parse_args()
+
+with open(args.input) as csvfile:
     reader = csv.DictReader(csvfile, dialect="sparkasse")
 
     buff = []
