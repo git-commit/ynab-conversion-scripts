@@ -1,3 +1,6 @@
+#!/usr/bin/env python2
+
+import os
 import csv
 import argparse
 
@@ -24,8 +27,10 @@ def main():
 
             buff.append(row)
 
+    # delete old file
+    os.remove(args.input)
 
-    output_filename = args.input[:-4] + "-ynab.csv"
+    output_filename = args.input[:-4] + ".ynab.csv"
     with open(output_filename, "wb") as csvout:
         fieldnames_ynab = ["Date","Payee","Category","Memo","Outflow","Inflow"]
         writer = csv.DictWriter(csvout, dialect="ynab", fieldnames=fieldnames_ynab)
