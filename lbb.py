@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 import csv
 import argparse
+import os
 
 def main():
     csv.register_dialect('sparkasse', delimiter=';', quoting=csv.QUOTE_ALL)
@@ -30,8 +31,11 @@ def main():
 
             buff.append(row)
 
+    # delete old file
+    os.remove(args.input)
 
-    output_filename = args.input[:-4] + "-ynab.csv"
+
+    output_filename = args.input[:-4] + ".ynab.csv"
     with open(output_filename, "wb") as csvout:
         fieldnames_ynab = ["Date","Payee","Category","Memo","Outflow","Inflow"]
         writer = csv.DictWriter(csvout, dialect="ynab", fieldnames=fieldnames_ynab)
